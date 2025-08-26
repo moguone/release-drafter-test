@@ -1,0 +1,30 @@
+name: Deploy on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      
+      - name: Deploy to production
+        run: |
+          echo "🚀 Deploying version ${{ github.event.release.tag_name }} to production!"
+          echo "Release name: ${{ github.event.release.name }}"
+          echo "Release body: ${{ github.event.release.body }}"
+          # ここに実際のデプロイコマンドを記述
+          # 例:
+          # - npm ci && npm run build
+          # - aws s3 sync ./dist s3://your-bucket/
+          # - kubectl apply -f k8s/
+          # - など
+          
+      - name: Notify deployment success
+        run: |
+          echo "✅ Deployment of ${{ github.event.release.tag_name }} completed successfully!"
