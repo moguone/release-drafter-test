@@ -1,0 +1,9 @@
+This is a test file to verify release-drafter behavior with unlabeled PRs.
+
+Created at: 2025-08-26
+Purpose: Testing release-drafter categorization without labels
+
+When this PR is merged without any labels, we want to see:
+- Where it appears in the draft release notes
+- How it's categorized (or not categorized)
+- What the default behavior is for unlabeled changes
