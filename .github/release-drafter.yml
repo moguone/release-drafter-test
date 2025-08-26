@@ -1,6 +1,7 @@
 # release-drafter の設定ファイル
-name-template: 'v$RESOLVED_VERSION'
-tag-template: 'v$RESOLVED_VERSION'
+# 日付ベースのリリースタグを使用 (release/YYYY-MM-DD)
+name-template: 'Release $DRAFT_RELEASE_DATE'
+tag-template: 'release/$DRAFT_RELEASE_DATE'
 categories:
   - title: '🚀 Features'
     labels:
@@ -25,26 +26,27 @@ categories:
       - 'deps'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
-version-resolver:
-  major:
-    labels:
-      - 'major'
-  minor:
-    labels:
-      - 'minor'
-      - 'feature'
-      - 'enhancement'
-  patch:
-    labels:
-      - 'patch'
-      - 'fix'
-      - 'bugfix'
-      - 'bug'
-      - 'chore'
-      - 'maintenance'
-      - 'documentation'
-      - 'dependencies'
-  default: patch
+# 日付ベースのリリースではバージョン番号は使用しないため、version-resolverは不要
+# version-resolver:
+#   major:
+#     labels:
+#       - 'major'
+#   minor:
+#     labels:
+#       - 'minor'
+#       - 'feature'
+#       - 'enhancement'
+#   patch:
+#     labels:
+#       - 'patch'
+#       - 'fix'
+#       - 'bugfix'
+#       - 'bug'
+#       - 'chore'
+#       - 'maintenance'
+#       - 'documentation'
+#       - 'dependencies'
+#   default: patch
 template: |
   ## Changes
 
