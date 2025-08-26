@@ -1,7 +1,7 @@
 # release-drafter の設定ファイル
 # 日付ベースのリリースタグを使用 (release/YYYY-MM-DD)
-name-template: 'Release $DRAFT_RELEASE_DATE'
-tag-template: 'release/$DRAFT_RELEASE_DATE'
+name-template: 'Release $RESOLVED_VERSION'
+tag-template: 'release/$RESOLVED_VERSION'
 categories:
   - title: '🚀 Features'
     labels:

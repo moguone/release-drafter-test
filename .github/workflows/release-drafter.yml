@@ -17,6 +17,15 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v6
+      - name: Generate release date
+        id: date
+        run: |
+          # 日本時間で日付を取得 (UTC+9)
+          echo "date=$(TZ='Asia/Tokyo' date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+          
+      - name: Create Release Draft
+        uses: release-drafter/release-drafter@v6
+        with:
+          version: ${{ steps.date.outputs.date }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
