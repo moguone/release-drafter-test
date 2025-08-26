@@ -26,6 +26,7 @@ jobs:
       - name: Create Release Draft
         uses: release-drafter/release-drafter@v6
         with:
-          version: ${{ steps.date.outputs.date }}
+          name: "Release ${{ steps.date.outputs.date }}"
+          tag: "release/${{ steps.date.outputs.date }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

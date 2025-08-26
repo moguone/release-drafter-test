@@ -1,7 +1,6 @@
 # release-drafter の設定ファイル
 # 日付ベースのリリースタグを使用 (release/YYYY-MM-DD)
-name-template: 'Release $RESOLVED_VERSION'
-tag-template: 'release/$RESOLVED_VERSION'
+# name と tag はワークフローで直接指定するため、ここでは設定不要
 categories:
   - title: '🚀 Features'
     labels:
