@@ -17,16 +17,40 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Generate release date
-        id: date
+      - name: Generate release version
+        id: version
         run: |
           # 日本時間で日付を取得 (UTC+9)
-          echo "date=$(TZ='Asia/Tokyo' date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+          DATE=$(TZ='Asia/Tokyo' date +'%Y-%m-%d')
+          echo "date=${DATE}" >> $GITHUB_OUTPUT
+          
+          # 同日のリリースタグをチェックして連番を決定
+          # GitHub CLIを使って既存のタグを取得
+          EXISTING_TAGS=$(gh api repos/${{ github.repository }}/tags --paginate --jq '.[].name' 2>/dev/null || echo "")
+          
+          # 今日の日付でフィルタリングして最大の番号を取得
+          MAX_NUM=0
+          for TAG in $EXISTING_TAGS; do
+            if [[ $TAG =~ ^release/${DATE}\.([0-9]+)$ ]]; then
+              NUM=${BASH_REMATCH[1]}
+              if [[ $NUM -gt $MAX_NUM ]]; then
+                MAX_NUM=$NUM
+              fi
+            fi
+          done
+          
+          # 次の番号を計算
+          NEXT_NUM=$((MAX_NUM + 1))
+          
+          # バージョン文字列を生成
+          VERSION="${DATE}.${NEXT_NUM}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Generated version: ${VERSION}"
           
       - name: Create Release Draft
         uses: release-drafter/release-drafter@v6
         with:
-          name: "Release ${{ steps.date.outputs.date }}"
-          tag: "release/${{ steps.date.outputs.date }}"
+          name: "Release ${{ steps.version.outputs.version }}"
+          tag: "release/${{ steps.version.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
